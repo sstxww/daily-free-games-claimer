@@ -1,0 +1,26 @@
+name: 每日自动领取免费游戏
+
+on:
+  schedule:
+    - cron: '0 3 * * *'  # 北京时间每天上午 11 点左右
+  workflow_dispatch:      # 手动触发测试
+
+jobs:
+  claim:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 领取 Epic / Prime Gaming / GOG 免费游戏
+        run: |
+          docker run --rm \
+            -v free-games-data:/fgc/data \
+            --pull=always \
+            ghcr.io/vogler/free-games-claimer \
+            bash -c "node epic-games; node prime-gaming; node gog"
+        env:
+          EG_EMAIL: ${{ secrets.EG_EMAIL }}
+          EG_PASSWORD: ${{ secrets.EG_PASSWORD }}
+          EG_OTPKEY: ${{ secrets.EG_OTPKEY }}
+          PG_EMAIL: ${{ secrets.PG_EMAIL }}
+          PG_PASSWORD: ${{ secrets.PG_PASSWORD }}
+          GOG_EMAIL: ${{ secrets.GOG_EMAIL }}
+          GOG_PASSWORD: ${{ secrets.GOG_PASSWORD }}
