@@ -1,8 +1,8 @@
 name: 每日自动领取免费游戏
 
 on:
-  schedule:
-    - cron: '0 3 * * *'  # 北京时间每天上午 11 点左右
+  # schedule:
+  #   - cron: '0 3 * * *'  # 北京时间每天上午 11 点左右
   workflow_dispatch:      # 手动触发测试
 
 jobs:
